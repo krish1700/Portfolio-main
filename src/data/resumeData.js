@@ -256,10 +256,10 @@ export const resumeData = {
   ],
 
   certifications: [
-    { id: 1, name: "AWS Cloud Practitioner", issuer: "Amazon Web Services", date: "2025", credentialId: "EE68G9W1RERQ1XCK" },
-    { id: 2, name: "AZ-900: Microsoft Azure Fundamentals", issuer: "Microsoft", date: "2025", credentialId: "I390-0533" },
-    { id: 3, name: "Power BI Desktop", issuer: "Coursera", date: "2022", credentialId: "" },
-    { id: 4, name: "Machine Learning, Data Science & AI Engineering with Python", issuer: "Udemy", date: "2021", credentialId: "" },
-    { id: 5, name: "DevHacks 2025 Winner – Best Use of AI Personas (TherapyAI)", issuer: "DevHack - Arizona State University", date: "2025", credentialId: "" }
+    { id: 1, name: "DevHacks 2025 Winner – Best Use of AI Personas (TherapyAI)", issuer: "DevHack - Arizona State University", date: "2025", credentialId: "" },
+    { id: 2, name: "AWS Cloud Practitioner", issuer: "Amazon Web Services", date: "2022", credentialId: "EE68G9W1RERQ1XCK" },
+    { id: 3, name: "AZ-900: Microsoft Azure Fundamentals", issuer: "Microsoft", date: "2022", credentialId: "I390-0533" },
+    { id: 4, name: "Power BI Desktop", issuer: "Coursera", date: "2022", credentialId: "" },
+    { id: 5, name: "Machine Learning, Data Science & AI Engineering with Python", issuer: "Udemy", date: "2021", credentialId: "" }
   ]
 };

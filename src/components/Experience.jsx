@@ -4,7 +4,7 @@ import { resumeData } from '../data/resumeData';
 
 const Experience = () => {
   const { experience } = resumeData;
-  const [expandedJob, setExpandedJob] = useState(0); // First job expanded by default
+  const [expandedJob, setExpandedJob] = useState(null); // All jobs collapsed by default
 
   const toggleJob = (index) => {
     setExpandedJob(expandedJob === index ? null : index);

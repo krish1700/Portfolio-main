@@ -1,8 +1,14 @@
-import { Github, ExternalLink, TrendingUp, Database, Brain, LineChart } from 'lucide-react';
+import { useState } from 'react';
+import { Github, ExternalLink, TrendingUp, Database, Brain, LineChart, ChevronDown, ChevronUp } from 'lucide-react';
 import { resumeData } from '../data/resumeData';
 
 const ProjectsData = () => {
   const { projects } = resumeData;
+  const [expandedProject, setExpandedProject] = useState(null); // First project expanded by default
+
+  const toggleProject = (index) => {
+    setExpandedProject(expandedProject === index ? null : index);
+  };
 
   const categoryIcons = {
     'Machine Learning': Brain,
@@ -48,17 +54,28 @@ const ProjectsData = () => {
           {projects.map((project, index) => {
             const CategoryIcon = categoryIcons[project.category] || TrendingUp;
             const categoryColor = categoryColors[project.category] || 'bg-gray-100 text-gray-700 border-gray-200';
+            const isExpanded = expandedProject === index;
             
             return (
               <div
                 key={project.id}
-                className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-300 overflow-hidden border-2 border-gray-700 hover:border-green-500/50 group"
+                className={`
+                  relative group
+                  bg-gradient-to-br from-gray-800 to-gray-900 
+                  rounded-2xl overflow-hidden
+                  border-2 transition-all duration-500
+                  ${isExpanded ? 'border-green-500 shadow-2xl shadow-green-500/20' : 'border-gray-700 hover:border-green-500/50'}
+                `}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                {/* Category Badge */}
-                <div className="p-6 pb-4 relative z-10">
+                
+                {/* Header - Always visible */}
+                <div
+                  className="p-6 cursor-pointer relative z-10"
+                  onClick={() => toggleProject(index)}
+                >
                   <div className="flex items-center justify-between mb-4">
                     <div className={`flex items-center space-x-2 px-3 py-1.5 rounded-full border ${categoryColor} shadow-lg`}>
                       <CategoryIcon className="w-4 h-4" />
@@ -88,14 +105,27 @@ const ProjectsData = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-bold text-gray-100 mb-3 group-hover:text-green-400 transition-colors">
-                    {project.name}
-                  </h3>
-                  <p className="text-gray-300 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-gray-100 mb-2 group-hover:text-green-400 transition-colors">
+                        {project.name}
+                      </h3>
+                      <p className="text-gray-300 mb-3 leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
+                    
+                    {/* Expand button */}
+                    <button className="flex-shrink-0 p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                      {isExpanded ? (
+                        <ChevronUp className="w-6 h-6 text-green-400" />
+                      ) : (
+                        <ChevronDown className="w-6 h-6 text-gray-400" />
+                      )}
+                    </button>
+                  </div>
 
-                  {/* Metrics */}
+                  {/* Metrics - Always visible */}
                   {project.metrics && (
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       {Object.entries(project.metrics).map(([key, value], idx) => (
@@ -110,29 +140,59 @@ const ProjectsData = () => {
                       ))}
                     </div>
                   )}
+                </div>
 
-                  {/* Highlights */}
-                  <div className="mb-4">
-                    <ul className="space-y-2">
-                      {project.highlights.map((highlight, idx) => (
-                        <li key={idx} className="text-sm text-gray-300 flex items-start">
-                          <TrendingUp className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Expandable content */}
+                <div
+                  className={`
+                    overflow-hidden transition-all duration-500
+                    ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}
+                  `}
+                >
+                  <div className="px-6 pb-6 pt-2 border-t border-gray-700/50 relative z-10">
+                    {/* Full Description */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wide mb-3">
+                        Project Details
+                      </h4>
+                      <p className="text-gray-300 leading-relaxed mb-4">
+                        {project.description}
+                      </p>
+                    </div>
 
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-gradient-to-r from-green-50 to-teal-50 text-gray-700 rounded-full text-xs font-medium border border-green-200"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {/* Highlights */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wide mb-3">
+                        Key Highlights
+                      </h4>
+                      <ul className="space-y-3">
+                        {project.highlights.map((highlight, idx) => (
+                          <li key={idx} className="flex items-start text-gray-300 leading-relaxed">
+                            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center mr-3 mt-0.5">
+                              <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                            </div>
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Technologies */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wide mb-3">
+                        Technologies Used
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech, idx) => (
+                          <span
+                            key={idx}
+                            className="px-3 py-1.5 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 hover:border-green-500 text-gray-300 hover:text-green-400 rounded-lg text-sm font-medium transition-all duration-300 cursor-default"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
