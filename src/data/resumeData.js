@@ -12,7 +12,7 @@ export const resumeData = {
     tagline: "Turning data into decisions",
     links: {
       github: "https://github.com/krish1700",
-      linkedin: "https://www.linkedin.com/in/krish-patil-877549208/",
+      linkedin: "https://www.linkedin.com/in/krish-naresh-patil/",
       email: "mailto:krishpatil4151@gmail.com"
     }
   },
