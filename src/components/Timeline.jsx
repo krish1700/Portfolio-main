@@ -54,7 +54,7 @@ const Timeline = () => {
                 className={`relative mb-12 ${isLeft ? 'md:pr-1/2' : 'md:pl-1/2 md:text-right'}`}
               >
                 {/* Icon */}
-                <div className={`absolute left-8 md:left-1/2 transform -translate-x-1/2 ${isLeft ? 'md:-translate-x-1/2' : 'md:-translate-x-1/2'}`}>
+                <div className={`absolute left-8 md:left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isLeft ? 'md:-translate-x-1/2' : 'md:-translate-x-1/2'}`}>
                   <div className={`w-16 h-16 bg-gradient-to-br ${item.color} rounded-full flex items-center justify-center shadow-lg border-4 border-gray-900 group-hover:scale-110 transition-transform`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
